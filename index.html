@@ -6,6 +6,10 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <title>12-Week Transformation</title>
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#7c5cfc">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-title" content="Workout">
 <style>
 :root {
   --bg: #0f0f13;
@@ -776,6 +780,11 @@ function autoDetectWeek() {
   if (dayOfWeek >= 1 && dayOfWeek <= 5) {
     currentDay = dayOfWeek - 1;
   }
+}
+
+// ─── SERVICE WORKER ───
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('sw.js');
 }
 
 // ─── INIT ───
