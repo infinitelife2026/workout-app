@@ -54,19 +54,6 @@
     padding: 0.5rem 0;
   }
 
-  .status-msg {
-    font-size: 0.78rem; margin-top: 0.4rem; padding: 0.4rem 0.6rem;
-    border-radius: 6px;
-  }
-  .status-msg.loading { background: #FFF3CD; color: #856404; }
-  .status-msg.ok { background: #D4EDDA; color: #155724; }
-  .status-msg.fail { background: #F8D7DA; color: #721C24; }
-
-  .test-link {
-    display: inline-block; font-size: 0.75rem; color: #2D6A4F;
-    margin-top: 0.3rem; text-decoration: underline; cursor: pointer;
-  }
-
   .footer { text-align: center; padding: 1.5rem; font-size: 0.75rem; color: #999; }
 </style>
 </head>
@@ -81,133 +68,114 @@
   <a href="index.html" class="back-link">&#8592; Back to Workout Schedule</a>
 
   <div class="tip">
-    Each week's audio covers all 5 training days. Press the play button to listen.
+    Each week's audio covers all 5 training days — Monday through Friday.
+    Use the play button on each player to listen.
   </div>
 
-  <div id="weeks"></div>
+  <!-- PHASE 1: FOUNDATION -->
+  <div class="phase-divider p1">PHASE 1: FOUNDATION</div>
+
+  <div class="week-card">
+    <h3>Week 1</h3>
+    <div class="phase">Phase 1: Foundation</div>
+    <div class="dates">April 6-10, 2026 &nbsp;|&nbsp; Mon-Fri</div>
+    <audio controls preload="none">
+      <source src="https://raw.githubusercontent.com/infinitelife2026/workout-app/main/audio/Week_1_Phase_1_Hey_Queen!_Welcome_.mp3" type="audio/mpeg">
+      <source src="https://raw.githubusercontent.com/infinitelife2026/workout-app/main/audio/Week_1_Phase_1_Hey_Queen%21_Welcome_.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <div class="week-card">
+    <h3>Week 2</h3>
+    <div class="phase">Phase 1: Foundation</div>
+    <div class="dates">April 13-17, 2026 &nbsp;|&nbsp; Mon-Fri</div>
+    <audio controls preload="none">
+      <source src="https://raw.githubusercontent.com/infinitelife2026/workout-app/main/audio/Week_2_Phase_1_Welcome_back_for_.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <div class="week-card">
+    <h3>Week 3</h3>
+    <div class="phase">Phase 1: Foundation</div>
+    <div class="dates">April 20-24, 2026 &nbsp;|&nbsp; Mon-Fri</div>
+    <audio controls preload="none">
+      <source src="https://raw.githubusercontent.com/infinitelife2026/workout-app/main/audio/Week_3_Phase_1_It%E2%80%99s_Week_Three%2C_.mp3" type="audio/mpeg">
+      <source src="https://raw.githubusercontent.com/infinitelife2026/workout-app/main/audio/Week_3_Phase_1_It's_Week_Three,_.mp3" type="audio/mpeg">
+      <source src="https://raw.githubusercontent.com/infinitelife2026/workout-app/main/audio/Week_3_Phase_1_It%27s_Week_Three%2C_.mp3" type="audio/mpeg">
+    </audio>
+  </div>
+
+  <div class="week-card">
+    <h3>Week 4</h3>
+    <div class="phase">Phase 1: Foundation</div>
+    <div class="dates">April 27 - May 1, 2026 &nbsp;|&nbsp; Mon-Fri</div>
+    <div class="no-audio">No audio file yet</div>
+  </div>
+
+  <!-- PHASE 2: BUILDING -->
+  <div class="phase-divider p2">PHASE 2: BUILDING</div>
+
+  <div class="week-card">
+    <h3>Week 5</h3>
+    <div class="phase">Phase 2: Building</div>
+    <div class="dates">May 4-8, 2026 &nbsp;|&nbsp; Mon-Fri</div>
+    <div class="no-audio">No audio file yet</div>
+  </div>
+
+  <div class="week-card">
+    <h3>Week 6</h3>
+    <div class="phase">Phase 2: Building</div>
+    <div class="dates">May 11-15, 2026 &nbsp;|&nbsp; Mon-Fri</div>
+    <div class="no-audio">No audio file yet</div>
+  </div>
+
+  <div class="week-card">
+    <h3>Week 7</h3>
+    <div class="phase">Phase 2: Building</div>
+    <div class="dates">May 18-22, 2026 &nbsp;|&nbsp; Mon-Fri</div>
+    <div class="no-audio">No audio file yet</div>
+  </div>
+
+  <div class="week-card">
+    <h3>Week 8</h3>
+    <div class="phase">Phase 2: Building</div>
+    <div class="dates">May 25-29, 2026 &nbsp;|&nbsp; Mon-Fri</div>
+    <div class="no-audio">No audio file yet</div>
+  </div>
+
+  <!-- PHASE 3: PEAK -->
+  <div class="phase-divider p3">PHASE 3: PEAK</div>
+
+  <div class="week-card">
+    <h3>Week 9</h3>
+    <div class="phase">Phase 3: Peak</div>
+    <div class="dates">June 1-5, 2026 &nbsp;|&nbsp; Mon-Fri</div>
+    <div class="no-audio">No audio file yet</div>
+  </div>
+
+  <div class="week-card">
+    <h3>Week 10</h3>
+    <div class="phase">Phase 3: Peak</div>
+    <div class="dates">June 8-12, 2026 &nbsp;|&nbsp; Mon-Fri</div>
+    <div class="no-audio">No audio file yet</div>
+  </div>
+
+  <div class="week-card">
+    <h3>Week 11</h3>
+    <div class="phase">Phase 3: Peak</div>
+    <div class="dates">June 15-19, 2026 &nbsp;|&nbsp; Mon-Fri</div>
+    <div class="no-audio">No audio file yet</div>
+  </div>
+
+  <div class="week-card">
+    <h3>Week 12</h3>
+    <div class="phase">Phase 3: Peak</div>
+    <div class="dates">June 22-26, 2026 &nbsp;|&nbsp; Mon-Fri</div>
+    <div class="no-audio">No audio file yet</div>
+  </div>
+
 </div>
 
 <div class="footer">12-Week Transformation Program</div>
-
-<script>
-// ============================================================
-// AUDIO FILE CONFIGURATION
-// Each week lists multiple URL attempts — the player will try
-// each one until it finds the file. Update these if your files
-// have different names.
-// ============================================================
-const weeks = [
-  {
-    week: 1, phase: "Phase 1: Foundation", dates: "April 6-10, 2026",
-    urls: [
-      "audio/Week_1_Phase_1_Hey_Queen!_Welcome_.mp3",
-      "audio/Week_1_Phase_1_Hey_Queen%21_Welcome_.mp3",
-      "audio/Week 1 Phase 1 Hey Queen! Welcome .mp3",
-      "audio/week_1.mp3",
-      "audio/Week_1.mp3"
-    ]
-  },
-  {
-    week: 2, phase: "Phase 1: Foundation", dates: "April 13-17, 2026",
-    urls: [
-      "audio/Week_2_Phase_1_Welcome_back_for_.mp3",
-      "audio/Week_2.mp3",
-      "audio/week_2.mp3"
-    ]
-  },
-  {
-    week: 3, phase: "Phase 1: Foundation", dates: "April 20-24, 2026",
-    urls: [
-      "audio/Week_3_Phase_1_It%E2%80%99s_Week_Three%2C_.mp3",
-      "audio/Week_3_Phase_1_It's_Week_Three,_.mp3",
-      "audio/Week_3_Phase_1_It%27s_Week_Three%2C_.mp3",
-      "audio/Week_3_Phase_1_It\u2019s_Week_Three,_.mp3",
-      "audio/Week_3.mp3",
-      "audio/week_3.mp3"
-    ]
-  },
-  { week: 4, phase: "Phase 1: Foundation", dates: "April 27 - May 1, 2026", urls: [] },
-  { week: 5, phase: "Phase 2: Building", dates: "May 4-8, 2026", urls: [] },
-  { week: 6, phase: "Phase 2: Building", dates: "May 11-15, 2026", urls: [] },
-  { week: 7, phase: "Phase 2: Building", dates: "May 18-22, 2026", urls: [] },
-  { week: 8, phase: "Phase 2: Building", dates: "May 25-29, 2026", urls: [] },
-  { week: 9, phase: "Phase 3: Peak", dates: "June 1-5, 2026", urls: [] },
-  { week: 10, phase: "Phase 3: Peak", dates: "June 8-12, 2026", urls: [] },
-  { week: 11, phase: "Phase 3: Peak", dates: "June 15-19, 2026", urls: [] },
-  { week: 12, phase: "Phase 3: Peak", dates: "June 22-26, 2026", urls: [] },
-];
-
-const container = document.getElementById('weeks');
-let html = '';
-let lastPhase = '';
-
-weeks.forEach(w => {
-  // Phase divider
-  const pNum = w.week <= 4 ? 1 : w.week <= 8 ? 2 : 3;
-  if (w.phase !== lastPhase) {
-    html += '<div class="phase-divider p' + pNum + '">' + w.phase.toUpperCase() + '</div>';
-    lastPhase = w.phase;
-  }
-
-  html += '<div class="week-card">';
-  html += '<h3>Week ' + w.week + '</h3>';
-  html += '<div class="phase">' + w.phase + '</div>';
-  html += '<div class="dates">' + w.dates + ' &nbsp;|&nbsp; Mon-Fri</div>';
-
-  if (w.urls.length > 0) {
-    html += '<div id="player' + w.week + '"></div>';
-    html += '<div class="status-msg loading" id="status' + w.week + '">Testing audio file...</div>';
-  } else {
-    html += '<div class="no-audio">No audio file yet</div>';
-  }
-
-  html += '</div>';
-});
-
-container.innerHTML = html;
-
-// For each week with URLs, try each URL until one works
-weeks.forEach(w => {
-  if (w.urls.length === 0) return;
-  tryUrls(w.week, w.urls, 0);
-});
-
-function tryUrls(week, urls, index) {
-  const statusDiv = document.getElementById('status' + week);
-  const playerDiv = document.getElementById('player' + week);
-
-  if (index >= urls.length) {
-    // None worked
-    statusDiv.className = 'status-msg fail';
-    statusDiv.innerHTML = 'Could not load audio. None of these URLs worked:<br>' +
-      urls.map(u => '<span style="font-size:0.7rem;word-break:break-all;">' + u + '</span>').join('<br>');
-    return;
-  }
-
-  const url = urls[index];
-  statusDiv.className = 'status-msg loading';
-  statusDiv.textContent = 'Trying: ' + url + ' ...';
-
-  // Use fetch to test if the URL returns a valid response
-  fetch(url, { method: 'HEAD' })
-    .then(response => {
-      if (response.ok) {
-        // URL works! Show the audio player
-        statusDiv.className = 'status-msg ok';
-        statusDiv.textContent = 'Audio loaded! (' + url + ')';
-        playerDiv.innerHTML = '<audio controls preload="metadata" style="width:100%;height:40px;margin-top:0.3rem;"><source src="' + url + '" type="audio/mpeg">Your browser does not support audio.</audio>';
-      } else {
-        // This URL failed, try next
-        statusDiv.textContent = url + ' returned ' + response.status + ', trying next...';
-        tryUrls(week, urls, index + 1);
-      }
-    })
-    .catch(err => {
-      // Network error, try next
-      statusDiv.textContent = url + ' failed (' + err.message + '), trying next...';
-      tryUrls(week, urls, index + 1);
-    });
-}
-</script>
 </body>
 </html>
