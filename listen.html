@@ -16,51 +16,9 @@
   .header h1 { font-size: 1.3rem; }
   .header p { font-size: 0.85rem; opacity: 0.8; margin-top: 0.3rem; }
 
-  .weeks {
-    display: flex; overflow-x: auto; gap: 0.4rem;
-    padding: 0.8rem 1rem; background: white;
-    -webkit-overflow-scrolling: touch;
-  }
-  .weeks::-webkit-scrollbar { display: none; }
-  .wk {
-    flex-shrink: 0; padding: 0.4rem 0.9rem;
-    border: 2px solid #52B788; border-radius: 20px;
-    font-size: 0.82rem; font-weight: 600; cursor: pointer;
-    background: white; color: #2D6A4F;
-  }
-  .wk.on { background: #2D6A4F; color: white; border-color: #2D6A4F; }
-
   .container { max-width: 600px; margin: 0 auto; padding: 1rem; }
 
-  .day {
-    background: white; border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    margin-bottom: 0.8rem; overflow: hidden;
-  }
-  .day-top {
-    display: flex; align-items: center; gap: 0.8rem; padding: 1rem;
-  }
-  .play {
-    width: 50px; height: 50px; border-radius: 50%;
-    background: #2D6A4F; color: white; border: none;
-    font-size: 1.3rem; cursor: pointer; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 2px 8px rgba(45,106,79,0.3);
-  }
-  .play:hover { background: #1B4332; }
-  .play.on { background: #B5651D; }
-
-  .info { flex: 1; }
-  .info h3 { font-size: 0.95rem; color: #1B4332; }
-  .info p { font-size: 0.78rem; color: #888; margin-top: 0.15rem; }
-
-  .bar-wrap {
-    height: 5px; background: #eee; margin: 0 1rem 0.8rem;
-    border-radius: 3px; cursor: pointer; overflow: hidden;
-  }
-  .bar { height: 100%; width: 0%; background: #2D6A4F; border-radius: 3px; }
-
-  .status { font-size: 0.72rem; color: #999; padding: 0 1rem 0.8rem; }
+  .back-link { display: block; text-align: center; padding: 0.8rem; color: #2D6A4F; font-weight: 600; text-decoration: none; font-size: 0.9rem; }
 
   .tip {
     background: #FFF3CD; border-radius: 10px; padding: 1rem;
@@ -68,95 +26,149 @@
     line-height: 1.5;
   }
 
+  .week {
+    background: white; border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    margin-bottom: 0.8rem; overflow: hidden;
+  }
+
+  .week-top {
+    display: flex; align-items: center; gap: 0.8rem; padding: 1rem;
+  }
+
+  .play {
+    width: 54px; height: 54px; border-radius: 50%;
+    background: #2D6A4F; color: white; border: none;
+    font-size: 1.4rem; cursor: pointer; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(45,106,79,0.3);
+    transition: all 0.2s;
+  }
+  .play:hover { background: #1B4332; transform: scale(1.05); }
+  .play.on { background: #B5651D; box-shadow: 0 2px 8px rgba(181,101,29,0.3); }
+
+  .info { flex: 1; }
+  .info h3 { font-size: 1rem; color: #1B4332; }
+  .info .phase { font-size: 0.78rem; color: #40916C; font-weight: 600; margin-top: 0.1rem; }
+  .info .focus { font-size: 0.75rem; color: #888; margin-top: 0.15rem; }
+
+  .bar-wrap {
+    height: 6px; background: #eee; margin: 0 1rem 0.5rem;
+    border-radius: 3px; cursor: pointer; overflow: hidden;
+  }
+  .bar { height: 100%; width: 0%; background: #2D6A4F; border-radius: 3px; transition: width 0.3s; }
+
+  .status { font-size: 0.75rem; color: #999; padding: 0 1rem 0.8rem; }
+
+  .phase-divider {
+    text-align: center; padding: 0.6rem; font-weight: 700;
+    font-size: 0.85rem; letter-spacing: 1px; color: white;
+    border-radius: 8px; margin-bottom: 0.8rem;
+  }
+  .phase-divider.p1 { background: #2D6A4F; }
+  .phase-divider.p2 { background: #B5651D; }
+  .phase-divider.p3 { background: #8B0000; }
+
   .footer { text-align: center; padding: 1.5rem; font-size: 0.75rem; color: #999; }
-  .back-link { display: block; text-align: center; padding: 0.8rem; color: #2D6A4F; font-weight: 600; text-decoration: none; font-size: 0.9rem; }
 </style>
 </head>
 <body>
 
 <div class="header">
   <h1>TRAINER NARRATION</h1>
-  <p>Tap play to hear your trainer walk you through each workout</p>
+  <p>Tap play to hear your trainer walk you through each week</p>
 </div>
-
-<div class="weeks" id="weeks"></div>
 
 <div class="container">
   <a href="index.html" class="back-link">&#8592; Back to Workout Schedule</a>
 
-  <div class="tip" id="tip">
-    Pick a week above, then tap the green play button for any day to hear your personal trainer walk you through the entire workout.
+  <div class="tip">
+    Each week's audio covers all 5 training days — Monday through Friday. Tap the green play button to start listening. You can pause, resume, and scrub through using the progress bar.
   </div>
 
-  <div id="days"></div>
+  <div id="weeks"></div>
 </div>
 
 <div class="footer">12-Week Transformation Program</div>
 
 <script>
-const dayNames = ["Monday - Upper Push", "Tuesday - Lower Body A", "Wednesday - Upper Pull", "Thursday - Lower Body B", "Friday - HIIT + Core"];
-const dayFocus = ["Chest, Shoulders, Triceps", "Quads, Glutes, Hamstrings, Calves", "Back, Biceps, Rear Delts", "Glutes, Hamstrings, Quads, Calves", "Full Body + Core"];
+/*
+  ═══════════════════════════════════════════════
+  AUDIO FILE MAP
+  ═══════════════════════════════════════════════
+  Update the file names below to match EXACTLY
+  what is in your audio/ folder on GitHub.
 
-let audio = null, playBtn = null, curWeek = 1;
+  To find your exact file names:
+  Go to github.com/infinitelife2026/workout-app
+  Click the audio/ folder and copy each file name.
+  ═══════════════════════════════════════════════
+*/
+const audioFiles = {
+  1:  "Week_1_Phase_1_Hey_Queen!_Welcome_.mp3",
+  2:  "Week_2_Phase_1_Welcome_back_for_.mp3",
+  3:  "Week_3_Phase_1_It\u2019s_Week_Three,_.mp3",
+  4:  "",
+  5:  "",
+  6:  "",
+  7:  "",
+  8:  "",
+  9:  "",
+  10: "",
+  11: "",
+  12: "",
+};
 
-function pad(n) { return String(n).padStart(2, "0"); }
+const weekInfo = [
+  { week: 1,  phase: "Phase 1: Foundation", dates: "April 6-10" },
+  { week: 2,  phase: "Phase 1: Foundation", dates: "April 13-17" },
+  { week: 3,  phase: "Phase 1: Foundation", dates: "April 20-24" },
+  { week: 4,  phase: "Phase 1: Foundation", dates: "April 27 - May 1" },
+  { week: 5,  phase: "Phase 2: Building",   dates: "May 4-8" },
+  { week: 6,  phase: "Phase 2: Building",   dates: "May 11-15" },
+  { week: 7,  phase: "Phase 2: Building",   dates: "May 18-22" },
+  { week: 8,  phase: "Phase 2: Building",   dates: "May 25-29" },
+  { week: 9,  phase: "Phase 3: Peak",       dates: "June 1-5" },
+  { week: 10, phase: "Phase 3: Peak",       dates: "June 8-12" },
+  { week: 11, phase: "Phase 3: Peak",       dates: "June 15-19" },
+  { week: 12, phase: "Phase 3: Peak",       dates: "June 22-26" },
+];
 
-function renderWeeks() {
-  const el = document.getElementById("weeks");
-  el.innerHTML = "";
-  for (let w = 1; w <= 12; w++) {
-    const b = document.createElement("button");
-    b.className = "wk" + (w === curWeek ? " on" : "");
-    b.textContent = "Wk " + w;
-    b.onclick = () => { curWeek = w; stopAudio(); renderWeeks(); renderDays(); };
-    el.appendChild(b);
-  }
-}
-
-function renderDays() {
-  const el = document.getElementById("days");
-  let html = "";
-  for (let d = 1; d <= 5; d++) {
-    html += `
-      <div class="day" id="day${d}">
-        <div class="day-top">
-          <button class="play" id="btn${d}" onclick="toggle(${d})">&#9654;</button>
-          <div class="info">
-            <h3>${dayNames[d-1]}</h3>
-            <p>${dayFocus[d-1]}</p>
-          </div>
-        </div>
-        <div class="bar-wrap" onclick="seek(event, ${d})"><div class="bar" id="bar${d}"></div></div>
-        <div class="status" id="st${d}">Tap play to start</div>
-      </div>`;
-  }
-  el.innerHTML = html;
-}
+let audio = null, playBtn = null;
 
 function stopAudio() {
   if (audio) { audio.pause(); audio = null; }
   if (playBtn) { playBtn.innerHTML = "&#9654;"; playBtn.classList.remove("on"); playBtn = null; }
 }
 
-function toggle(day) {
-  const btn = document.getElementById("btn" + day);
-  const bar = document.getElementById("bar" + day);
-  const st = document.getElementById("st" + day);
-  const src = "audio/week" + pad(curWeek) + "_day" + day + ".mp3";
+function toggle(week) {
+  const btn = document.getElementById("btn" + week);
+  const bar = document.getElementById("bar" + week);
+  const st = document.getElementById("st" + week);
+  const file = audioFiles[week];
 
+  if (!file) { st.textContent = "No audio file mapped for this week"; return; }
+
+  // Don't use encodeURIComponent — it breaks special chars like ! ' ,
+  // Just encode spaces (if any) and let the browser handle the rest
+  const src = "audio/" + file.replace(/ /g, "%20");
+
+  // Same button — pause/resume
   if (audio && playBtn === btn) {
     if (audio.paused) { audio.play(); btn.innerHTML = "&#9646;&#9646;"; btn.classList.add("on"); }
     else { audio.pause(); btn.innerHTML = "&#9654;"; btn.classList.remove("on"); }
     return;
   }
 
+  // Stop anything playing
   stopAudio();
-  // Reset all bars/statuses
-  for (let i = 1; i <= 5; i++) {
-    document.getElementById("bar" + i).style.width = "0%";
-    document.getElementById("st" + i).textContent = "Tap play to start";
-    document.getElementById("btn" + i).innerHTML = "&#9654;";
-    document.getElementById("btn" + i).classList.remove("on");
+  for (let i = 1; i <= 12; i++) {
+    const b = document.getElementById("bar" + i);
+    const s = document.getElementById("st" + i);
+    const bt = document.getElementById("btn" + i);
+    if (b) b.style.width = "0%";
+    if (s) s.textContent = "Tap play to start";
+    if (bt) { bt.innerHTML = "&#9654;"; bt.classList.remove("on"); }
   }
 
   audio = new Audio(src);
@@ -170,19 +182,58 @@ function toggle(day) {
     st.textContent = m1 + ":" + String(s1).padStart(2,"0") + " / " + m2 + ":" + String(s2).padStart(2,"0");
   };
   audio.onended = () => { btn.innerHTML = "&#9654;"; btn.classList.remove("on"); st.textContent = "Finished! Tap to replay"; bar.style.width = "0%"; };
-  audio.onerror = () => { st.textContent = "Audio file not found yet"; btn.innerHTML = "&#9654;"; };
+  // If load fails, try swapping curly and straight apostrophes as fallback
+  audio.onerror = () => {
+    const alt = file.includes("\u2019") ? file.replace(/\u2019/g, "'") : file.replace(/'/g, "\u2019");
+    if (alt !== file && !audio._triedAlt) {
+      audio._triedAlt = true;
+      audio.src = "audio/" + alt.replace(/ /g, "%20");
+      audio.play().then(() => { btn.innerHTML = "&#9646;&#9646;"; btn.classList.add("on"); }).catch(() => { st.textContent = "Could not load: " + file; btn.innerHTML = "&#9654;"; });
+    } else {
+      st.textContent = "Could not load: " + file; btn.innerHTML = "&#9654;"; btn.classList.remove("on");
+    }
+  };
 
-  audio.play().then(() => { btn.innerHTML = "&#9646;&#9646;"; btn.classList.add("on"); }).catch(() => { st.textContent = "Audio file not found yet"; });
+  audio.play().then(() => { btn.innerHTML = "&#9646;&#9646;"; btn.classList.add("on"); st.textContent = "Loading..."; }).catch(err => { st.textContent = "Could not load: " + file; btn.innerHTML = "&#9654;"; });
 }
 
-function seek(e, day) {
+function seek(e, week) {
   if (!audio || !audio.duration) return;
   const rect = e.currentTarget.getBoundingClientRect();
   audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
 }
 
-renderWeeks();
-renderDays();
+// Render
+const el = document.getElementById("weeks");
+let html = "";
+let lastPhase = "";
+
+weekInfo.forEach(w => {
+  // Phase divider
+  const pNum = w.week <= 4 ? 1 : w.week <= 8 ? 2 : 3;
+  const pClass = "p" + pNum;
+  if (w.phase !== lastPhase) {
+    html += '<div class="phase-divider ' + pClass + '">' + w.phase.toUpperCase() + '</div>';
+    lastPhase = w.phase;
+  }
+
+  const hasFile = audioFiles[w.week] && audioFiles[w.week].length > 5;
+
+  html += '<div class="week">' +
+    '<div class="week-top">' +
+      '<button class="play" id="btn' + w.week + '" onclick="toggle(' + w.week + ')">&#9654;</button>' +
+      '<div class="info">' +
+        '<h3>Week ' + w.week + '</h3>' +
+        '<div class="phase">' + w.phase + '</div>' +
+        '<div class="focus">' + w.dates + ', 2026 &nbsp;|&nbsp; All 5 days (Mon-Fri)</div>' +
+      '</div>' +
+    '</div>' +
+    '<div class="bar-wrap" onclick="seek(event,' + w.week + ')"><div class="bar" id="bar' + w.week + '"></div></div>' +
+    '<div class="status" id="st' + w.week + '">' + (hasFile ? 'Tap play to start' : 'No audio file yet') + '</div>' +
+  '</div>';
+});
+
+el.innerHTML = html;
 </script>
 </body>
 </html>
