@@ -11,7 +11,6 @@
   .header {
     background: linear-gradient(135deg, #1B4332, #2D6A4F);
     color: white; text-align: center; padding: 1.5rem 1rem;
-    position: sticky; top: 0; z-index: 10;
   }
   .header h1 { font-size: 1.3rem; }
   .header p { font-size: 0.85rem; opacity: 0.8; margin-top: 0.3rem; }
@@ -26,40 +25,6 @@
     line-height: 1.5;
   }
 
-  .week {
-    background: white; border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
-    margin-bottom: 0.8rem; overflow: hidden;
-  }
-
-  .week-top {
-    display: flex; align-items: center; gap: 0.8rem; padding: 1rem;
-  }
-
-  .play {
-    width: 54px; height: 54px; border-radius: 50%;
-    background: #2D6A4F; color: white; border: none;
-    font-size: 1.4rem; cursor: pointer; flex-shrink: 0;
-    display: flex; align-items: center; justify-content: center;
-    box-shadow: 0 2px 8px rgba(45,106,79,0.3);
-    transition: all 0.2s;
-  }
-  .play:hover { background: #1B4332; transform: scale(1.05); }
-  .play.on { background: #B5651D; box-shadow: 0 2px 8px rgba(181,101,29,0.3); }
-
-  .info { flex: 1; }
-  .info h3 { font-size: 1rem; color: #1B4332; }
-  .info .phase { font-size: 0.78rem; color: #40916C; font-weight: 600; margin-top: 0.1rem; }
-  .info .focus { font-size: 0.75rem; color: #888; margin-top: 0.15rem; }
-
-  .bar-wrap {
-    height: 6px; background: #eee; margin: 0 1rem 0.5rem;
-    border-radius: 3px; cursor: pointer; overflow: hidden;
-  }
-  .bar { height: 100%; width: 0%; background: #2D6A4F; border-radius: 3px; transition: width 0.3s; }
-
-  .status { font-size: 0.75rem; color: #999; padding: 0 1rem 0.8rem; }
-
   .phase-divider {
     text-align: center; padding: 0.6rem; font-weight: 700;
     font-size: 0.85rem; letter-spacing: 1px; color: white;
@@ -69,6 +34,31 @@
   .phase-divider.p2 { background: #B5651D; }
   .phase-divider.p3 { background: #8B0000; }
 
+  .week-card {
+    background: white; border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    margin-bottom: 0.8rem; padding: 1rem;
+  }
+  .week-card h3 { font-size: 1rem; color: #1B4332; margin-bottom: 0.2rem; }
+  .week-card .phase { font-size: 0.78rem; color: #40916C; font-weight: 600; }
+  .week-card .dates { font-size: 0.75rem; color: #888; margin-bottom: 0.6rem; }
+
+  .week-card audio {
+    width: 100%;
+    height: 40px;
+    margin-top: 0.3rem;
+  }
+
+  .week-card .no-audio {
+    font-size: 0.8rem; color: #999; font-style: italic;
+    padding: 0.5rem 0;
+  }
+
+  .week-card .error-msg {
+    font-size: 0.78rem; color: #c00; margin-top: 0.3rem;
+    display: none;
+  }
+
   .footer { text-align: center; padding: 1.5rem; font-size: 0.75rem; color: #999; }
 </style>
 </head>
@@ -76,164 +66,136 @@
 
 <div class="header">
   <h1>TRAINER NARRATION</h1>
-  <p>Tap play to hear your trainer walk you through each week</p>
+  <p>Press play to hear your trainer walk you through each week</p>
 </div>
 
 <div class="container">
   <a href="index.html" class="back-link">&#8592; Back to Workout Schedule</a>
 
   <div class="tip">
-    Each week's audio covers all 5 training days — Monday through Friday. Tap the green play button to start listening. You can pause, resume, and scrub through using the progress bar.
+    Each week's audio covers all 5 training days — Monday through Friday.
+    Use the play button on each player to listen. You can pause, scrub, and adjust volume.
   </div>
 
-  <div id="weeks"></div>
+  <!-- PHASE 1: FOUNDATION (Weeks 1-4) -->
+  <div class="phase-divider p1">PHASE 1: FOUNDATION</div>
+
+  <div class="week-card">
+    <h3>Week 1</h3>
+    <div class="phase">Phase 1: Foundation</div>
+    <div class="dates">April 6-10, 2026 &nbsp;|&nbsp; All 5 days (Mon-Fri)</div>
+    <audio controls preload="none">
+      <source src="audio/Week_1_Phase_1_Hey_Queen!_Welcome_.mp3" type="audio/mpeg">
+    </audio>
+    <div class="error-msg" id="err1"></div>
+  </div>
+
+  <div class="week-card">
+    <h3>Week 2</h3>
+    <div class="phase">Phase 1: Foundation</div>
+    <div class="dates">April 13-17, 2026 &nbsp;|&nbsp; All 5 days (Mon-Fri)</div>
+    <audio controls preload="none">
+      <source src="audio/Week_2_Phase_1_Welcome_back_for_.mp3" type="audio/mpeg">
+    </audio>
+    <div class="error-msg" id="err2"></div>
+  </div>
+
+  <div class="week-card">
+    <h3>Week 3</h3>
+    <div class="phase">Phase 1: Foundation</div>
+    <div class="dates">April 20-24, 2026 &nbsp;|&nbsp; All 5 days (Mon-Fri)</div>
+    <audio controls preload="none" id="audio3">
+      <source src="audio/Week_3_Phase_1_It%E2%80%99s_Week_Three%2C_.mp3" type="audio/mpeg">
+      <source src="audio/Week_3_Phase_1_It's_Week_Three,_.mp3" type="audio/mpeg">
+      <source src="audio/Week_3_Phase_1_It%27s_Week_Three%2C_.mp3" type="audio/mpeg">
+    </audio>
+    <div class="error-msg" id="err3"></div>
+  </div>
+
+  <div class="week-card">
+    <h3>Week 4</h3>
+    <div class="phase">Phase 1: Foundation</div>
+    <div class="dates">April 27 - May 1, 2026 &nbsp;|&nbsp; All 5 days (Mon-Fri)</div>
+    <div class="no-audio">No audio file yet</div>
+  </div>
+
+  <!-- PHASE 2: BUILDING (Weeks 5-8) -->
+  <div class="phase-divider p2">PHASE 2: BUILDING</div>
+
+  <div class="week-card">
+    <h3>Week 5</h3>
+    <div class="phase">Phase 2: Building</div>
+    <div class="dates">May 4-8, 2026 &nbsp;|&nbsp; All 5 days (Mon-Fri)</div>
+    <div class="no-audio">No audio file yet</div>
+  </div>
+
+  <div class="week-card">
+    <h3>Week 6</h3>
+    <div class="phase">Phase 2: Building</div>
+    <div class="dates">May 11-15, 2026 &nbsp;|&nbsp; All 5 days (Mon-Fri)</div>
+    <div class="no-audio">No audio file yet</div>
+  </div>
+
+  <div class="week-card">
+    <h3>Week 7</h3>
+    <div class="phase">Phase 2: Building</div>
+    <div class="dates">May 18-22, 2026 &nbsp;|&nbsp; All 5 days (Mon-Fri)</div>
+    <div class="no-audio">No audio file yet</div>
+  </div>
+
+  <div class="week-card">
+    <h3>Week 8</h3>
+    <div class="phase">Phase 2: Building</div>
+    <div class="dates">May 25-29, 2026 &nbsp;|&nbsp; All 5 days (Mon-Fri)</div>
+    <div class="no-audio">No audio file yet</div>
+  </div>
+
+  <!-- PHASE 3: PEAK (Weeks 9-12) -->
+  <div class="phase-divider p3">PHASE 3: PEAK</div>
+
+  <div class="week-card">
+    <h3>Week 9</h3>
+    <div class="phase">Phase 3: Peak</div>
+    <div class="dates">June 1-5, 2026 &nbsp;|&nbsp; All 5 days (Mon-Fri)</div>
+    <div class="no-audio">No audio file yet</div>
+  </div>
+
+  <div class="week-card">
+    <h3>Week 10</h3>
+    <div class="phase">Phase 3: Peak</div>
+    <div class="dates">June 8-12, 2026 &nbsp;|&nbsp; All 5 days (Mon-Fri)</div>
+    <div class="no-audio">No audio file yet</div>
+  </div>
+
+  <div class="week-card">
+    <h3>Week 11</h3>
+    <div class="phase">Phase 3: Peak</div>
+    <div class="dates">June 15-19, 2026 &nbsp;|&nbsp; All 5 days (Mon-Fri)</div>
+    <div class="no-audio">No audio file yet</div>
+  </div>
+
+  <div class="week-card">
+    <h3>Week 12</h3>
+    <div class="phase">Phase 3: Peak</div>
+    <div class="dates">June 22-26, 2026 &nbsp;|&nbsp; All 5 days (Mon-Fri)</div>
+    <div class="no-audio">No audio file yet</div>
+  </div>
+
 </div>
 
 <div class="footer">12-Week Transformation Program</div>
 
 <script>
-/*
-  ═══════════════════════════════════════════════
-  AUDIO FILE MAP
-  ═══════════════════════════════════════════════
-  Update the file names below to match EXACTLY
-  what is in your audio/ folder on GitHub.
-
-  To find your exact file names:
-  Go to github.com/infinitelife2026/workout-app
-  Click the audio/ folder and copy each file name.
-  ═══════════════════════════════════════════════
-*/
-const audioFiles = {
-  1:  "Week_1_Phase_1_Hey_Queen!_Welcome_.mp3",
-  2:  "Week_2_Phase_1_Welcome_back_for_.mp3",
-  3:  "Week_3_Phase_1_It\u2019s_Week_Three,_.mp3",
-  4:  "",
-  5:  "",
-  6:  "",
-  7:  "",
-  8:  "",
-  9:  "",
-  10: "",
-  11: "",
-  12: "",
-};
-
-const weekInfo = [
-  { week: 1,  phase: "Phase 1: Foundation", dates: "April 6-10" },
-  { week: 2,  phase: "Phase 1: Foundation", dates: "April 13-17" },
-  { week: 3,  phase: "Phase 1: Foundation", dates: "April 20-24" },
-  { week: 4,  phase: "Phase 1: Foundation", dates: "April 27 - May 1" },
-  { week: 5,  phase: "Phase 2: Building",   dates: "May 4-8" },
-  { week: 6,  phase: "Phase 2: Building",   dates: "May 11-15" },
-  { week: 7,  phase: "Phase 2: Building",   dates: "May 18-22" },
-  { week: 8,  phase: "Phase 2: Building",   dates: "May 25-29" },
-  { week: 9,  phase: "Phase 3: Peak",       dates: "June 1-5" },
-  { week: 10, phase: "Phase 3: Peak",       dates: "June 8-12" },
-  { week: 11, phase: "Phase 3: Peak",       dates: "June 15-19" },
-  { week: 12, phase: "Phase 3: Peak",       dates: "June 22-26" },
-];
-
-let audio = null, playBtn = null;
-
-function stopAudio() {
-  if (audio) { audio.pause(); audio = null; }
-  if (playBtn) { playBtn.innerHTML = "&#9654;"; playBtn.classList.remove("on"); playBtn = null; }
-}
-
-function toggle(week) {
-  const btn = document.getElementById("btn" + week);
-  const bar = document.getElementById("bar" + week);
-  const st = document.getElementById("st" + week);
-  const file = audioFiles[week];
-
-  if (!file) { st.textContent = "No audio file mapped for this week"; return; }
-
-  // Don't use encodeURIComponent — it breaks special chars like ! ' ,
-  // Just encode spaces (if any) and let the browser handle the rest
-  const src = "audio/" + file.replace(/ /g, "%20");
-
-  // Same button — pause/resume
-  if (audio && playBtn === btn) {
-    if (audio.paused) { audio.play(); btn.innerHTML = "&#9646;&#9646;"; btn.classList.add("on"); }
-    else { audio.pause(); btn.innerHTML = "&#9654;"; btn.classList.remove("on"); }
-    return;
-  }
-
-  // Stop anything playing
-  stopAudio();
-  for (let i = 1; i <= 12; i++) {
-    const b = document.getElementById("bar" + i);
-    const s = document.getElementById("st" + i);
-    const bt = document.getElementById("btn" + i);
-    if (b) b.style.width = "0%";
-    if (s) s.textContent = "Tap play to start";
-    if (bt) { bt.innerHTML = "&#9654;"; bt.classList.remove("on"); }
-  }
-
-  audio = new Audio(src);
-  playBtn = btn;
-
-  audio.ontimeupdate = () => {
-    if (!audio.duration) return;
-    bar.style.width = (audio.currentTime / audio.duration * 100) + "%";
-    const m1 = Math.floor(audio.currentTime / 60), s1 = Math.floor(audio.currentTime % 60);
-    const m2 = Math.floor(audio.duration / 60), s2 = Math.floor(audio.duration % 60);
-    st.textContent = m1 + ":" + String(s1).padStart(2,"0") + " / " + m2 + ":" + String(s2).padStart(2,"0");
-  };
-  audio.onended = () => { btn.innerHTML = "&#9654;"; btn.classList.remove("on"); st.textContent = "Finished! Tap to replay"; bar.style.width = "0%"; };
-  // If load fails, try swapping curly and straight apostrophes as fallback
-  audio.onerror = () => {
-    const alt = file.includes("\u2019") ? file.replace(/\u2019/g, "'") : file.replace(/'/g, "\u2019");
-    if (alt !== file && !audio._triedAlt) {
-      audio._triedAlt = true;
-      audio.src = "audio/" + alt.replace(/ /g, "%20");
-      audio.play().then(() => { btn.innerHTML = "&#9646;&#9646;"; btn.classList.add("on"); }).catch(() => { st.textContent = "Could not load: " + file; btn.innerHTML = "&#9654;"; });
-    } else {
-      st.textContent = "Could not load: " + file; btn.innerHTML = "&#9654;"; btn.classList.remove("on");
+// Show error messages if audio fails to load
+document.querySelectorAll('audio').forEach((player, i) => {
+  player.addEventListener('error', function() {
+    const errDiv = this.closest('.week-card').querySelector('.error-msg');
+    if (errDiv) {
+      errDiv.style.display = 'block';
+      errDiv.textContent = 'Audio file could not be loaded. Check that the file exists in the audio/ folder.';
     }
-  };
-
-  audio.play().then(() => { btn.innerHTML = "&#9646;&#9646;"; btn.classList.add("on"); st.textContent = "Loading..."; }).catch(err => { st.textContent = "Could not load: " + file; btn.innerHTML = "&#9654;"; });
-}
-
-function seek(e, week) {
-  if (!audio || !audio.duration) return;
-  const rect = e.currentTarget.getBoundingClientRect();
-  audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
-}
-
-// Render
-const el = document.getElementById("weeks");
-let html = "";
-let lastPhase = "";
-
-weekInfo.forEach(w => {
-  // Phase divider
-  const pNum = w.week <= 4 ? 1 : w.week <= 8 ? 2 : 3;
-  const pClass = "p" + pNum;
-  if (w.phase !== lastPhase) {
-    html += '<div class="phase-divider ' + pClass + '">' + w.phase.toUpperCase() + '</div>';
-    lastPhase = w.phase;
-  }
-
-  const hasFile = audioFiles[w.week] && audioFiles[w.week].length > 5;
-
-  html += '<div class="week">' +
-    '<div class="week-top">' +
-      '<button class="play" id="btn' + w.week + '" onclick="toggle(' + w.week + ')">&#9654;</button>' +
-      '<div class="info">' +
-        '<h3>Week ' + w.week + '</h3>' +
-        '<div class="phase">' + w.phase + '</div>' +
-        '<div class="focus">' + w.dates + ', 2026 &nbsp;|&nbsp; All 5 days (Mon-Fri)</div>' +
-      '</div>' +
-    '</div>' +
-    '<div class="bar-wrap" onclick="seek(event,' + w.week + ')"><div class="bar" id="bar' + w.week + '"></div></div>' +
-    '<div class="status" id="st' + w.week + '">' + (hasFile ? 'Tap play to start' : 'No audio file yet') + '</div>' +
-  '</div>';
+  }, true);
 });
-
-el.innerHTML = html;
 </script>
 </body>
 </html>
