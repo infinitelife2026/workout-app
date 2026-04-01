@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Workout Audio - Trainer Narration</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: -apple-system, 'Segoe UI', sans-serif; background: #F5F7F5; color: #333; }
+
+  .header {
+    background: linear-gradient(135deg, #1B4332, #2D6A4F);
+    color: white; text-align: center; padding: 1.5rem 1rem;
+    position: sticky; top: 0; z-index: 10;
+  }
+  .header h1 { font-size: 1.3rem; }
+  .header p { font-size: 0.85rem; opacity: 0.8; margin-top: 0.3rem; }
+
+  .weeks {
+    display: flex; overflow-x: auto; gap: 0.4rem;
+    padding: 0.8rem 1rem; background: white;
+    -webkit-overflow-scrolling: touch;
+  }
+  .weeks::-webkit-scrollbar { display: none; }
+  .wk {
+    flex-shrink: 0; padding: 0.4rem 0.9rem;
+    border: 2px solid #52B788; border-radius: 20px;
+    font-size: 0.82rem; font-weight: 600; cursor: pointer;
+    background: white; color: #2D6A4F;
+  }
+  .wk.on { background: #2D6A4F; color: white; border-color: #2D6A4F; }
+
+  .container { max-width: 600px; margin: 0 auto; padding: 1rem; }
+
+  .day {
+    background: white; border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    margin-bottom: 0.8rem; overflow: hidden;
+  }
+  .day-top {
+    display: flex; align-items: center; gap: 0.8rem; padding: 1rem;
+  }
+  .play {
+    width: 50px; height: 50px; border-radius: 50%;
+    background: #2D6A4F; color: white; border: none;
+    font-size: 1.3rem; cursor: pointer; flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 0 2px 8px rgba(45,106,79,0.3);
+  }
+  .play:hover { background: #1B4332; }
+  .play.on { background: #B5651D; }
+
+  .info { flex: 1; }
+  .info h3 { font-size: 0.95rem; color: #1B4332; }
+  .info p { font-size: 0.78rem; color: #888; margin-top: 0.15rem; }
+
+  .bar-wrap {
+    height: 5px; background: #eee; margin: 0 1rem 0.8rem;
+    border-radius: 3px; cursor: pointer; overflow: hidden;
+  }
+  .bar { height: 100%; width: 0%; background: #2D6A4F; border-radius: 3px; }
+
+  .status { font-size: 0.72rem; color: #999; padding: 0 1rem 0.8rem; }
+
+  .tip {
+    background: #FFF3CD; border-radius: 10px; padding: 1rem;
+    font-size: 0.82rem; color: #856404; margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .footer { text-align: center; padding: 1.5rem; font-size: 0.75rem; color: #999; }
+  .back-link { display: block; text-align: center; padding: 0.8rem; color: #2D6A4F; font-weight: 600; text-decoration: none; font-size: 0.9rem; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <h1>TRAINER NARRATION</h1>
+  <p>Tap play to hear your trainer walk you through each workout</p>
+</div>
+
+<div class="weeks" id="weeks"></div>
+
+<div class="container">
+  <a href="index.html" class="back-link">&#8592; Back to Workout Schedule</a>
+
+  <div class="tip" id="tip">
+    Pick a week above, then tap the green play button for any day to hear your personal trainer walk you through the entire workout.
+  </div>
+
+  <div id="days"></div>
+</div>
+
+<div class="footer">12-Week Transformation Program</div>
+
+<script>
+const dayNames = ["Monday - Upper Push", "Tuesday - Lower Body A", "Wednesday - Upper Pull", "Thursday - Lower Body B", "Friday - HIIT + Core"];
+const dayFocus = ["Chest, Shoulders, Triceps", "Quads, Glutes, Hamstrings, Calves", "Back, Biceps, Rear Delts", "Glutes, Hamstrings, Quads, Calves", "Full Body + Core"];
+
+let audio = null, playBtn = null, curWeek = 1;
+
+function pad(n) { return String(n).padStart(2, "0"); }
+
+function renderWeeks() {
+  const el = document.getElementById("weeks");
+  el.innerHTML = "";
+  for (let w = 1; w <= 12; w++) {
+    const b = document.createElement("button");
+    b.className = "wk" + (w === curWeek ? " on" : "");
+    b.textContent = "Wk " + w;
+    b.onclick = () => { curWeek = w; stopAudio(); renderWeeks(); renderDays(); };
+    el.appendChild(b);
+  }
+}
+
+function renderDays() {
+  const el = document.getElementById("days");
+  let html = "";
+  for (let d = 1; d <= 5; d++) {
+    html += `
+      <div class="day" id="day${d}">
+        <div class="day-top">
+          <button class="play" id="btn${d}" onclick="toggle(${d})">&#9654;</button>
+          <div class="info">
+            <h3>${dayNames[d-1]}</h3>
+            <p>${dayFocus[d-1]}</p>
+          </div>
+        </div>
+        <div class="bar-wrap" onclick="seek(event, ${d})"><div class="bar" id="bar${d}"></div></div>
+        <div class="status" id="st${d}">Tap play to start</div>
+      </div>`;
+  }
+  el.innerHTML = html;
+}
+
+function stopAudio() {
+  if (audio) { audio.pause(); audio = null; }
+  if (playBtn) { playBtn.innerHTML = "&#9654;"; playBtn.classList.remove("on"); playBtn = null; }
+}
+
+function toggle(day) {
+  const btn = document.getElementById("btn" + day);
+  const bar = document.getElementById("bar" + day);
+  const st = document.getElementById("st" + day);
+  const src = "audio/week" + pad(curWeek) + "_day" + day + ".mp3";
+
+  if (audio && playBtn === btn) {
+    if (audio.paused) { audio.play(); btn.innerHTML = "&#9646;&#9646;"; btn.classList.add("on"); }
+    else { audio.pause(); btn.innerHTML = "&#9654;"; btn.classList.remove("on"); }
+    return;
+  }
+
+  stopAudio();
+  // Reset all bars/statuses
+  for (let i = 1; i <= 5; i++) {
+    document.getElementById("bar" + i).style.width = "0%";
+    document.getElementById("st" + i).textContent = "Tap play to start";
+    document.getElementById("btn" + i).innerHTML = "&#9654;";
+    document.getElementById("btn" + i).classList.remove("on");
+  }
+
+  audio = new Audio(src);
+  playBtn = btn;
+
+  audio.ontimeupdate = () => {
+    if (!audio.duration) return;
+    bar.style.width = (audio.currentTime / audio.duration * 100) + "%";
+    const m1 = Math.floor(audio.currentTime / 60), s1 = Math.floor(audio.currentTime % 60);
+    const m2 = Math.floor(audio.duration / 60), s2 = Math.floor(audio.duration % 60);
+    st.textContent = m1 + ":" + String(s1).padStart(2,"0") + " / " + m2 + ":" + String(s2).padStart(2,"0");
+  };
+  audio.onended = () => { btn.innerHTML = "&#9654;"; btn.classList.remove("on"); st.textContent = "Finished! Tap to replay"; bar.style.width = "0%"; };
+  audio.onerror = () => { st.textContent = "Audio file not found yet"; btn.innerHTML = "&#9654;"; };
+
+  audio.play().then(() => { btn.innerHTML = "&#9646;&#9646;"; btn.classList.add("on"); }).catch(() => { st.textContent = "Audio file not found yet"; });
+}
+
+function seek(e, day) {
+  if (!audio || !audio.duration) return;
+  const rect = e.currentTarget.getBoundingClientRect();
+  audio.currentTime = ((e.clientX - rect.left) / rect.width) * audio.duration;
+}
+
+renderWeeks();
+renderDays();
+</script>
+</body>
+</html>
